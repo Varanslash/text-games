@@ -1,0 +1,170 @@
+# System
+
+import random
+import time
+
+gameamount = 1
+gameswon = 0
+gameslost = 0
+gamestied = 0
+strat = 0
+
+print("GAME OF ROCK, PAPER, SCISSORS")
+time.sleep(1)
+print("CREATIVE COMPUTING, VARANSLASH 2025")
+time.sleep(1)
+print("TYPE ONLY IN CAPITAL LETTERS, LIKE THIS!")
+
+def aggro_strat():
+    global userinput2, gameswon, gameslost, gamestied
+    aimove = random.choice([2, 3, 3, 3, 1, 2, 4])
+    moves = {1: "PAPER", 2: "SCISSORS", 3: "ROCK", 4:"GUN"}
+
+    print("THIS IS OPPONENT'S CHOICE…")
+    print("…", moves[aimove])
+
+    if userinput2 == aimove:
+        print("TIE. NO WINNER.")
+        gamestied += 1
+    elif (userinput2 == 1 and aimove == 3) or \
+        (userinput2 == 2 and aimove == 1) or \
+        (userinput2 == 3 and aimove == 2):
+        print("AW! I LOSE!")
+        gameswon += 1
+    else:
+        print("WOW! I WIN!")
+        gameslost += 1
+        
+def feint_strat():
+    global userinput2, gameswon, gameslost, gamestied
+    aimove = random.choice([2, 1, 1, 2, 1, 3, 4])
+    moves = {1: "PAPER", 2: "SCISSORS", 3: "ROCK", 4:"GUN"}
+
+    print("THIS IS OPPONENT'S CHOICE…")
+    print("…", moves[aimove])
+
+    if userinput2 == aimove:
+        print("TIE. NO WINNER.")
+        gamestied += 1
+    elif (userinput2 == 1 and aimove == 3) or \
+        (userinput2 == 2 and aimove == 1) or \
+        (userinput2 == 3 and aimove == 2):
+        print("AW! I LOSE!")
+        gameswon += 1
+    else:
+        print("WOW! I WIN!")
+        gameslost += 1
+        
+def destruct_strat():
+    global userinput2, gameswon, gameslost, gamestied
+    aimove = random.choice([2, 3, 1, 4, 4, 4])
+    moves = {1: "PAPER", 2: "SCISSORS", 3: "ROCK", 4:"GUN"}
+
+    print("THIS IS OPPONENT'S CHOICE…")
+    print("…", moves[aimove])
+
+    if userinput2 == aimove:
+        print("TIE. NO WINNER.")
+        gamestied += 1
+    elif (userinput2 == 1 and aimove == 3) or \
+        (userinput2 == 2 and aimove == 1) or \
+        (userinput2 == 3 and aimove == 2):
+        print("AW! I LOSE!")
+        gameswon += 1
+    else:
+        print("WOW! I WIN!")
+        gameslost += 1
+        
+def juggler_strat():
+    global userinput2, gameswon, gameslost, gamestied
+    aimove = random.choice([2, 3, 1, 4])
+    moves = {1: "PAPER", 2: "SCISSORS", 3: "ROCK", 4:"GUN"}
+
+    print("THIS IS OPPONENT'S CHOICE…")
+    print("…", moves[aimove])
+
+    if userinput2 == aimove:
+        print("TIE. NO WINNER.")
+        gamestied += 1
+    elif (userinput2 == 1 and aimove == 3) or \
+        (userinput2 == 2 and aimove == 1) or \
+        (userinput2 == 3 and aimove == 2):
+        print("AW! I LOSE!")
+        gameswon += 1
+    else:
+        print("WOW! I WIN!")
+        gameslost += 1
+        
+def stratpicker():
+    if strat == 4:
+        destruct_strat()
+    elif strat == 3:
+        juggler_strat()
+    elif strat == 2:
+        feint_strat()
+    elif strat == 1:
+        aggro_strat()
+        
+def opponent_strat():
+    global strat
+    if opponent == "MADDIE":
+        stratarray = [1, 1, 2, 2, 2, 2, 3, 4]
+        strat = random.choice(stratarray)
+    elif opponent == "ANNA":
+        stratarray = [1, 1, 1, 1, 1, 2, 3, 4]
+        strat = random.choice(stratarray)
+    elif opponent == "TOMMY":
+        stratarray = [1, 2, 2, 2, 2, 3, 4, 4]
+        strat = random.choice(stratarray)
+    elif opponent == "CALVIN":
+        stratarray = [1, 2, 2, 3, 3, 4, 4, 4]
+        strat = random.choice(stratarray)
+        
+# Main Game
+
+while True:
+    time.sleep(1)
+    print("WELCOME TO ROCK PAPER SCISSORS!")
+    time.sleep(1)
+    print("HOW MANY GAMES WOULD YOU LIKE TO PLAY?")
+    gameend = int(input("GAMES?>"))
+    if gameend > 50:
+        print("SORRY, I'M NOT ALLOWED TO PLAY THAT MANY.")
+    else:
+        print("OKAY! LET'S PLAY!")
+        while True:
+            gameswon = gameslost = gamestied = 0
+            print("WHO DO YOU WANT TO PLAY AGAINST?\nMADDIE\nANNA\nTOMMY\nCALVIN")
+            opponent = input("OPPONENT?>")
+            if opponent not in("MADDIE", "ANNA", "TOMMY", "CALVIN"):
+                print("THAT PERSON ISN'T HERE!")
+            else:
+                print("OKAY! LET'S PLAY!")
+                opponent_strat()
+                for gameamount in range(1, gameend + 1):
+                    print("YOUR CHOICE?\n1 - PAPER\n2 - SCISSORS\n3 - ROCK")
+                    userinput2 = int(input("CHOICE?>"))
+                    if userinput2 == 1:
+                        print("HERE IS MY CHOICE!")
+                        time.sleep(1)
+                        print("PAPER!")
+                        stratpicker()
+                    elif userinput2 == 2:
+                        print("HERE IS MY CHOICE!")
+                        time.sleep(1)
+                        print("SCISSORS!")
+                        stratpicker()
+                    elif userinput2 == 3:
+                        print("HERE IS MY CHOICE!")
+                        time.sleep(1)
+                        print("ROCK!")
+                        stratpicker()
+                print("THANKS FOR PLAYING!")
+                time.sleep(1)
+                print("FINAL RESULTS:", gameswon, "GAMES WON,", gameslost, "GAMES LOST,", gamestied, "GAMES TIED")
+                if gameswon > gameslost:
+                    print("YOU WON! YOU ARE THE NEW CHAMPION!")
+                else:
+                    print("AW! YOU LOST! BETTER LUCK NEXT TIME!")
+                break
+            break
