@@ -1,0 +1,65 @@
+# Battle System
+
+import random
+import time
+
+playerhp = 300
+bosshp = 300
+turn = 1
+
+def player_system():
+    global bosshp
+    global playerhp
+    global turn
+    print("PLAYER:", playerhp)
+    userinput = input("CHOICE?>")
+    if userinput == "HELP":
+        print("LIST OF COMMANDS:\nFIGHT\nRUN")
+    elif userinput == "FIGHT":
+        damage = random.choice(range(20, 40))
+        bosshp -= damage
+        print(damage, "DAMAGE DEALT!")
+    elif userinput == "RUN":
+        print("YOU RAN AWAY.")
+        time.sleep(1)
+        exit()
+    else:
+        print("INVALID ACTION!")
+    turn = 2
+    if playerhp < 1:
+        print("YOU LOST!")
+        exit()
+        
+def generic_boss():
+    global bosshp
+    global playerhp
+    global turn
+    print("BOSS:", bosshp)
+    time.sleep(1)
+    miss = random.choice(range(1, 10))
+    if miss == 10:
+        print("MISS!")
+        turn = 1
+    if bosshp < 1:
+        print("YOU WON!")
+        exit()
+    else:
+        enemydamage = random.choice(range(15, 35))
+        playerhp -= enemydamage
+        print(enemydamage, "DAMAGE DEALT!")
+        turn = 1
+    if bosshp < 1:
+        print("YOU WON!")
+        exit()
+        
+# Main System
+
+print("MONSTERS ATTACK!")
+while True:
+    while turn == 1:
+        player_system()
+        break
+    
+    while turn == 2:
+        generic_boss()
+        break
