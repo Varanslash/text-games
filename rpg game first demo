@@ -1,0 +1,72 @@
+# Imports modules
+
+import random
+import time
+
+# Universal Commands
+
+def help():
+    print("List of world commands:\nmove [cardinal direction]\nspell [spell]\ntake [item]\ntalk [npc]\nleave\nList of battle commands:\nfight\nspell [spell]\nrun\n")
+    
+# Setting Variables
+
+bank = "village1"
+staff = 0
+weapon = "fists"
+    
+# Main Game
+
+while True:
+    
+    # Village
+    print("""MYSTERIOUS PERSON: You finally made it here... good. The world’s falling apart faster than we thought.""")
+    print("MYSTERIOUS PERSON: Monsters have started pouring out of the forest again. The old shrine’s light went out days ago.")
+    print("MYSTERIOUS PERSON: If you’re serious about helping, get yourself armed first. The blacksmith’s to the west. Some villagers might help you too.")
+    while bank == "village1":
+        print("left = weapons shop\nright = cottage\nforward = forest\nwhat do you do?")
+        userinput = input("Choice?>")
+        if userinput == "move west":
+            while True:
+                print("Shopkeeper: Hey! Welcome to my shop! You wanna buy some weapons?")
+                print("Shopkeeper: Actually, because you're new, I'll give you a weapon for free!")
+                print("Shopkeeper: I have a bow, a sword, and a staff. What would you like?")
+                userinput = input("Choice?>")
+                if userinput == "bow":
+                    weapon = "bow"
+                    print("Shopkeeper: A fine choice! Keep your distance, and you might live longer than most.")
+                elif userinput == "sword":
+                    weapon = "sword"
+                    print("Shopkeeper: Strong arm, steady heart. That’s what a blade demands.")
+                elif userinput == "staff":
+                    staff = 1
+                    print("Shopkeeper: Hah, so you’ve got a taste for magic? Careful with that thing — it bites back.")
+                elif userinput == "leave":
+                    print("Shopkeeper: Goodbye!")
+                    break
+                else:
+                    print("I don't have that weapon!")
+        elif userinput == "move east":
+            while True:
+                print("Oh? A Visitor! Come in, come in!")
+                print("There are two people in the room. One is a girl named May. The other is her husband Thomas. They seem to be very cheerful and happy. What do you do?")
+                userinput = input("Choice?>")
+                if userinput == "talk May":
+                    print("May: Well, hello there! Yes, I'm very happy with my husband.")
+                    print("May: But lately... there’s been strange noises coming from the woods at night. Like metal scraping stone.")
+                    print("May: If you’re going that way, please—be careful. We already lost too many to the forest.")
+                elif userinput == "talk Thomas":
+                    print("Thomas: Hey man. How ya doin'?")
+                    print("Thomas: If you’re heading out there, take this—found it near the old well. Didn’t dare touch it myself.")
+                    print("Thomas hands you a strange, rusted coin. You don’t know why, but it feels warm.")
+                elif userinput == "leave":
+                    print("You leave the cottage.")
+                    break
+        elif userinput == "move north":
+            print("You exit the town, and push forward further. You wonder what awaits you...")
+            bank = "forest1"
+            print("End of first demo.")
+            exit()
+        elif userinput == "help":
+            help()
+        else:
+            print("Invalid Command!")
