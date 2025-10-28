@@ -1,0 +1,61 @@
+# Imports modules
+
+import random
+import time
+
+# Universal Commands
+
+def help():
+    print("List of world commands:\nmove [cardinal direction]\nspell [spell]\ntake [item]\ntalk [npc]\nleave\nList of battle commands:\nfight\nspell [spell]\nrun")
+    
+# Setting Variables
+
+bank = "village1"
+staff = 0
+weapon = "fists"
+    
+# Main Game
+
+while True:
+    while bank == "village1":
+        print("MYSTERIOUS PERSON: Lorem Ipsum (varan, fill in later)")
+        print("left = weapons shop\nright = cottage\nforward = forest\nwhat do you do?\n(varan, fill this in later too)")
+        userinput = input("Choice?>")
+        if userinput == "move west":
+            while True:
+                print("Shopkeeper: Hey! Welcome to my shop! You wanna buy some weapons?")
+                print("Shopkeeper: Actually, because you're new, I'll give you a weapon for free!")
+                print("Shopkeeper: I have a bow, a sword, and a staff. What would you like?")
+                userinput = input("Choice?>")
+                if userinput == "bow":
+                    weapon = "bow"
+                elif userinput == "sword":
+                    weapon = "sword"
+                elif userinput == "staff":
+                    staff = 1
+                elif userinput == "leave":
+                    print("Shopkeeper: Goodbye!")
+                    break
+                else:
+                    print("I don't have that weapon!")
+        elif userinput == "move east":
+            while True:
+                print("Oh? A Visitor! Come in, come in!")
+                print("There are two people in the room. One is a girl named May. The other is her husband Thomas. They seem to be very cheerful and happy. What do you do?")
+                userinput = input("Choice?>")
+                if userinput == "talk May":
+                    print("May: Well, hello there! Yes, I'm very happy with my husband.")
+                elif userinput == "talk Thomas":
+                    print("Hey man. How ya doin?")
+                elif userinput == "leave":
+                    print("You leave the cottage.")
+                    break
+        elif userinput == "move north":
+            print("You exit the town, and push forward further. You wonder what awaits you...")
+            bank = "forest1"
+            print("End of first demo.")
+            exit()
+        elif userinput == "help":
+            help()
+        else:
+            print("Invalid Command!")
