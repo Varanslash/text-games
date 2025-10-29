@@ -1,0 +1,233 @@
+# --- System ---
+
+# Imports modules
+
+import random
+import time
+
+# Universal Commands
+
+def help():
+    print("List of world commands:\nmove [cardinal direction]\ntake [item]\ntalk [npc]\nleave\nList of battle commands:\nfight\nheal\nrun")
+
+def heal():
+    playerhp += random.choice(range(1, 5)) * playerlevel
+    print("Player HP:", playerhp)
+    
+# Setting Variables
+
+bank = "village1"
+staff = 0
+weapon = "fists"
+first_weapon = 0
+playerlevel = 1
+playerhp = playerlevel * 50
+
+# Enemies
+
+def forest_monster_encounter():
+    global enemypower
+    global enemyhp
+    global monster
+    global monsterencounter
+    global turn
+    monsterencounter = random.choice(range(1, 10))
+    monster = random.choice(["Bear", "Spider", "Goblin"])
+    if monsterencounter == 10:
+        if monster == "Goblin":
+            print(monster, "attacks!")
+            enemypower = random.choice(range(5, 10))
+            enemyhp = 20
+            while turn == 2:
+                generic_boss()
+        elif monster == "Spider":
+            print(monster, "attacks!")
+            enemypower = random.choice(range(2, 12))
+            enemyhp = 18
+            while turn == 2:
+                generic_boss()
+        elif monster == "Bear":
+            print(monster, "attacks!")
+            enemypower = random.choice(range(7, 11))
+            enemyhp = 25
+            while turn == 2:
+                generic_boss()
+            
+def generic_boss():
+    global enemyhp
+    global playerhp
+    global turn
+    print("Enemy:", enemyhp)
+    time.sleep(1)
+    miss = random.choice(range(1, 10))
+    if miss == 10:
+        print("MISS!")
+        turn = 1
+    if enemyhp < 1:
+        print("You won!")
+    else:
+        playerhp -= enemypower
+        print(enemypower, "damage dealt!")
+        turn = 1
+    if enemyhp < 1:
+        print("You won!")
+        
+def player_attack():
+    global enemyhp
+    global playerhp
+    global turn
+    print("Player:", playerhp)
+    userinput = input("Choice?>")
+    if userinput == "help":
+        print("List of commands:\nfight\nrun\nheal")
+    elif userinput == "fight":
+        weapon_values()
+        enemyhp -= playerpower
+        print(playerpower, "damage dealt!")
+    elif userinput == "heal":
+        heal()
+    elif userinput == "run":
+        print("You ran away.")
+        time.sleep(1)
+    else:
+        print("Invalid Action!")
+    turn = 2
+    if playerhp < 1:
+        print("You lost!")
+        exit()
+        
+def encounter():
+    monsterencounter = random.choice(range(1, 11))
+    if monsterencounter == 10:
+        turn = 1
+        if monsterencounter == 10:
+            print(monster, "attacks!")
+            enemypower = random.choice(range(5, 11)) * enemylevel
+            enemyhp = 20 * enemylevel
+            while not (enemyhp < 1):
+                while turn == 1:
+                    player_attack()
+                    turn = 2
+                    break
+                while turn == 2:
+                    generic_boss()
+                    turn = 1
+                    break
+	    
+# Weapons
+
+def weapon_values():
+    global weapon
+    global playerpower
+    if weapon == "fists":
+        playerpower = 7
+    elif weapon == "sword":
+        playerpower = random.choice(range(4, 10))
+    elif weapon == "bow":
+        playerpower = random.choice(range(2, 13))
+    elif weapon == "staff":
+        playerpower = random.choice(range(1, 20))
+
+# --- Main Game ---
+
+print("MYSTERIOUS PERSON: Hello there, adventurer.")
+time.sleep(1)
+print("The White Shrine has long since withered away.")
+time.sleep(1)
+print("And we start to feel the effects now.")
+time.sleep(1)
+print("The witch Kildren has awakened once again.")
+time.sleep(1)
+print("I will send you out to kill her.")
+time.sleep(1)
+print("Good luck, adventurer.")
+time.sleep(1)
+while True:
+    
+    # Village 1
+    
+    while bank == "village1":
+        print("left = weapons shop\nright = cottage\nforward = forest\nwhat do you do?\n(varan, fill this in later too)")
+        userinput = input("Village>")
+        if userinput == "move west":
+            print("You step into the small shop. On the walls, there are staves and blades galore. You admire the shininess of the weapons.")
+            time.sleep(1)
+            if first_weapon == 0:
+                print("Shopkeeper: Hey! Welcome to my shop! You wanna buy some weapons?")
+                time.sleep(1)
+                print("Shopkeeper: Actually, because you're new, I'll give you a weapon for free!")
+                time.sleep(1)
+                print("Shopkeeper: I have a bow, a sword, and a staff. What would you like?")
+            while True:
+                userinput = input("Weapons Shop>")
+                if first_weapon == 0:
+                    if userinput == "bow":
+                        print("You remind me of someone I met who lived in a place called District 12.")
+                        weapon = "bow"
+                    elif userinput == "sword":
+                        print("Shopkeeper: I see you're a slasher, eh?")
+                        weapon = "sword"
+                    elif userinput == "staff":
+                        "Shopkeeper: A magic user? Those are rare around here!"
+                        staff = 1
+                    elif userinput == "leave":
+                        print("Shopkeeper: Goodbye!")
+                        break
+                    else:
+                        print("Shopkeeper: I don't have that weapon!")
+                    first_weapon = 1
+                else:
+                    if userinput == "leave":
+                        print("Shopkeeper: Goodbye!")
+                        break
+                    elif userinput == "talk Shopkeeper":
+                        print("Shopkeeper: Well, hello there!")
+                    else:
+                        print("Invalid command!")
+        elif userinput == "move east":
+            while True:
+                print("Oh? A Visitor! Come in, come in!")
+                time.sleep(1)
+                print("There are two people in the room. One is a girl named May. The other is her husband Thomas. They seem to be very cheerful and happy. What do you do?")
+                userinput = input("May's Cottage>")
+                if userinput == "talk May":
+                    print("May: Well, hello there! Yes, I'm very happy with my husband.")
+                    time.sleep(1)
+                    print("May: Oh? The forest? Oh, I advise you don't go there. Many an adventurer have gone, and none have returned.")
+                elif userinput == "talk Thomas":
+                    print("Thomas: Hey man. How ya doin?")
+                    time.sleep(1)
+                    print("Thomas: Listen to my wife, kid.")
+                elif userinput == "leave":
+                    print("You leave the cottage.")
+                    break
+        elif userinput == "move north":
+            print("You exit the town, and push forward further. You wonder what awaits you...")
+            bank = "forest1"
+            break
+        elif userinput == "help":
+            help()
+        else:
+            print("Invalid Command!")
+            
+    # Forest 1
+    
+    print("The forest. Light shines in through the leaves. The trees are saturated, and the grass feels nice on your feet. But, you feel a sense of unease as you walk past. There are no animals here.")
+    print("East, West, North, South")
+    while bank == "forest1":
+        monster = "Bear"
+        userinput = input("Forest>")
+        encounter()
+        if userinput == "move east":
+            while True:
+                print("Forest. West, North")
+                encounter()
+                userinput = input("Forest>")
+                if userinput == "move west":
+                    break
+                elif userinput == "move north":
+                    while True:
+                        print("Forest. East, South, West.")
+                        # Under Construction
+        else:
+            print("Invalid Command!")
