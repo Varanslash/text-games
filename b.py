@@ -160,7 +160,7 @@ def encounter():
                 elif userinput == "fight":
                     weapon_values()
                     enemyhp -= playerpower
-                    print("Player did:", playerpower, "damage dealt!")
+                    print("Player dealt", playerpower, "damage!")
                 elif userinput == "heal":
                     heal()
                 elif userinput == "run":
@@ -2522,7 +2522,16 @@ while True:
                 print("A whisper echoes through your mind.")
                 time.sleep(1)
                 print("A jellyfish-like shape floats about in the darkness.")
+                time.sleep(1)
+                print("There's a faint purple sheen.")
+                time.sleep(1)
+                print("Then a faint pink sheen.")
+                time.sleep(1)
+                print("It floats out of the darkness.")
+                time.sleep(2)
                 print("The Mindflower awakens!")
+                time.sleep(0.5)
+                print("Mindflower attacks!")
                 mindflower_boss_encounter()
             else:
                 if userinput == "move north":
@@ -2562,4 +2571,3 @@ while True:
                 stat()
             else:
                 print("Invalid Command!")
-                
