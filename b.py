@@ -95,6 +95,21 @@ wisdom = random.choice(range(3, 21))
 charisma = random.choice(range(3, 21))
 playerhp = 50 + (constitution * playerlevel)
 boss1flag = True
+boss2flag = True
+
+tarostrength = random.choice(range(10, 15))
+tarodexterity = random.choice(range(10, 15))
+taroconstitution = random.choice(range(10, 15))
+tarointelligence = random.choice(range(10, 15))
+tarowisdom = random.choice(range(10, 15))
+tarocharisma = random.choice(range(10, 15))
+
+mindflowerstrength = random.choice(range(5, 11))
+mindflowerdexterity = random.choice(range(10, 15))
+mindflowerconstitution = random.choice(range(10, 15))
+mindflowerintelligence = random.choice(range(12, 15))
+mindflowerwisdom = random.choice(range(12, 15))
+mindflowercharisma = random.choice(range(12, 15))
 
 # Enemies
             
@@ -160,7 +175,7 @@ def encounter():
                 elif userinput == "fight":
                     weapon_values()
                     enemyhp -= playerpower
-                    print("Player dealt", playerpower, "damage!")
+                    print("Player did:", playerpower, "damage dealt!")
                 elif userinput == "heal":
                     heal()
                 elif userinput == "run":
@@ -265,11 +280,12 @@ def taro_boss_encounter():
     global playerlevel
     global playergold
     global boss1flag
+    global taroconstitution
     monsterencounter = 1
     if monsterencounter == 1:
         turn = 1
         print(boss, "attacks!")
-        bosshp = 80 * bosslevel
+        bosshp = 80 + (bosslevel * taroconstitution)
         while not (bosshp < 1):
             while turn == 1:
                 userinput = input("Choice?>")
@@ -307,6 +323,10 @@ def taro_boss():
     global bosshp
     global playerhp
     global turn
+    global bosslevel
+    global fistupgrade
+    global tarostrength
+    global enemypower
     print("Enemy:", bosshp)
     time.sleep(1)
     miss = random.choice(range(1, 21))
@@ -314,7 +334,7 @@ def taro_boss():
         print("Miss!")
         turn = 1
     else:
-        enemypower = (2 * bosslevel) + (random.choice(range(1, 10))) + (fistupgrade * 11) + round(strength / 15)
+        enemypower = (2 * bosslevel) + (random.choice(range(1, 10))) + (fistupgrade * 11) + round(tarostrength / 15)
         playerhp -= enemypower
         print(enemypower, "damage dealt!")
         turn = 1
@@ -453,11 +473,12 @@ def mindflower_boss_encounter():
     global playerlevel
     global playergold
     global boss2flag
+    global mindflowerconstitution
     monsterencounter = random.choice(range(1))
     if boss2flag == True:
         turn = 1
         print(boss, "attacks!")
-        bosshp = 60 * bosslevel
+        bosshp = 60 + (bosslevel * mindflowerconstitution)
         while not (bosshp < 1):
             while turn == 1:
                 userinput = input("Choice?>")
@@ -495,6 +516,11 @@ def mindflower_boss():
     global bosshp
     global playerhp
     global turn
+    global bosslevel
+    global mindflowerintelligence
+    global staffupgrade
+    global mindflowerwisdom
+    global enemypower
     print("Enemy:", bosshp)
     time.sleep(1)
     miss = random.choice(range(1, 21))
@@ -502,7 +528,7 @@ def mindflower_boss():
         print("Miss!")
         turn = 1
     else:
-        enemypower = (bosslevel * 5) + ((bosslevel * staffupgrade) / 2) + round((intelligence + wisdom) / 15)
+        enemypower = (bosslevel * 5) + ((bosslevel * staffupgrade) / 2) + round((mindflowerintelligence + mindflowerwisdom) / 15)
         playerhp -= enemypower
         print(enemypower, "damage dealt!")
         turn = 1
@@ -2522,16 +2548,7 @@ while True:
                 print("A whisper echoes through your mind.")
                 time.sleep(1)
                 print("A jellyfish-like shape floats about in the darkness.")
-                time.sleep(1)
-                print("There's a faint purple sheen.")
-                time.sleep(1)
-                print("Then a faint pink sheen.")
-                time.sleep(1)
-                print("It floats out of the darkness.")
-                time.sleep(2)
                 print("The Mindflower awakens!")
-                time.sleep(0.5)
-                print("Mindflower attacks!")
                 mindflower_boss_encounter()
             else:
                 if userinput == "move north":
