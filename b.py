@@ -13,8 +13,8 @@ def help():
 def heal():
     global playerhp
     playerhp += random.choice(range(1, 10)) * playerlevel
-    if playerhp > 50 + ((constitution * playerlevel) * 2):
-        playerhp = 50 + ((constitution * playerlevel) * 2)
+    if playerhp > 50 + (constitution * playerlevel):
+        playerhp = 50 + (constitution * playerlevel)
     print("Player HP:", playerhp)
         
 def map():
@@ -23,6 +23,7 @@ def map():
     [8 ][9 ][10][14]
 {7 ][5 ][4 ][3 ]
     [6 ][1 ][2 ]""")
+
     elif bank == "graveyard1":
         print("""                [11][12}
                 [9 ]    
@@ -31,12 +32,14 @@ def map():
 {15][14][8 ][5 ][2 ]
         [13][17][10]
         [16]""")
+
     elif bank == "village2":
         print("""   [4 ]                [3 ]
 {###############
     [2 ]    ####Trail[1]########
                             ####
                             ####""")
+
     elif bank == "dungeon1":
         print("""[14][13][12]
 [15]    [11][10]
@@ -45,7 +48,15 @@ def map():
 [6 ]    [7 ]
 [16]    [8 ][9 ]
 [17]
-[**]""")
+[18]""")
+
+    elif bank == "dungeon2":
+        print("""   [2 ][1 ]
+[8 ]    [3 ][4 ][ 5]
+[9 ][10][11]    [6 ][7 ]
+[12]    [13]
+    [14][15][16][17]
+    [19]        [18]""")
                             
 def stat():
     print("STR:", strength)
@@ -140,7 +151,7 @@ def encounter():
     if monsterencounter == 10:
         turn = 1
         print(monster, "attacks!")
-        enemyhp = 30 * enemylevel
+        enemyhp = 40 * enemylevel
         while not (enemyhp < 1):
             while turn == 1:
                 userinput = input("Choice?>")
@@ -181,83 +192,63 @@ def leveling():
     if playerexp > 50 and playerlevel < 2:
         playerlevel = 2
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 150 and playerlevel < 3:
         playerlevel = 3
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 350 and playerlevel < 4:
         playerlevel = 4
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 600 and playerlevel < 5:
         playerlevel = 5
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 800 and playerlevel < 6:
         playerlevel = 6
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 1100 and playerlevel < 7:
         playerlevel = 7
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 1400 and playerlevel < 8:
         playerlevel = 8
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 1800 and playerlevel < 9:
         playerlevel = 9
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 2500 and playerlevel < 10:
         playerlevel = 10
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 3000 and playerlevel < 11:
         playerlevel = 11
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 3600 and playerlevel < 12:
         playerlevel = 12
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 5000 and playerlevel < 13:
         playerlevel = 13
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 6100 and playerlevel < 14:
         playerlevel = 14
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 7200 and playerlevel < 15:
         playerlevel = 15
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 8500 and playerlevel < 16:
         playerlevel = 16
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 10000 and playerlevel < 17:
         playerlevel = 17
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 12500 and playerlevel < 18:
         playerlevel = 18
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 17500 and playerlevel < 19:
         playerlevel = 19
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 20000 and playerlevel < 20:
         playerlevel = 20
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
     elif playerexp > 25000 and playerlevel < 21:
         playerlevel = 21
         print("You reached level", playerlevel, "!")
-        playerhp = 50 + ((constitution * playerlevel) * 2)
         
 def enemyscale():
     global enemylevel
@@ -274,7 +265,8 @@ def taro_boss_encounter():
     global playerlevel
     global playergold
     global boss1flag
-    if boss1flag == True:
+    monsterencounter = 1
+    if monsterencounter == 1:
         turn = 1
         print(boss, "attacks!")
         bosshp = 80 * bosslevel
@@ -322,7 +314,7 @@ def taro_boss():
         print("Miss!")
         turn = 1
     else:
-        enemypower = (2 * bosslevel) + (random.choice(range(1, 7))) + round(strength / 15)
+        enemypower = (2 * bosslevel) + (random.choice(range(1, 10))) + (fistupgrade * 11) + round(strength / 15)
         playerhp -= enemypower
         print(enemypower, "damage dealt!")
         turn = 1
@@ -451,7 +443,7 @@ def bow_boss():
         print(enemypower, "damage dealt!")
         turn = 1
         
-def magic_boss_encounter():
+def mindflower_boss_encounter():
     global bosslevel
     global turn
     global bosshp
@@ -460,8 +452,9 @@ def magic_boss_encounter():
     global playerexp
     global playerlevel
     global playergold
+    global boss2flag
     monsterencounter = random.choice(range(1))
-    if monsterencounter == 1:
+    if boss2flag == True:
         turn = 1
         print(boss, "attacks!")
         bosshp = 60 * bosslevel
@@ -481,7 +474,7 @@ def magic_boss_encounter():
                 turn = 2
                 break
             while turn == 2:
-                magic_boss()
+                mindflower_boss()
                 print("Player HP:", playerhp)
                 turn = 1
                 break
@@ -491,13 +484,14 @@ def magic_boss_encounter():
                 print("You have", playerexp, "EXP!")
                 playergold += bosslevel * random.choice(range(1, 300))
                 print("You have", playergold, "gold!")
+                boss2flag = False
                 leveling()
                 break
             elif playerhp < 1:
                 print("You lost...")
                 exit()
                 
-def magic_boss():
+def mindflower_boss():
     global bosshp
     global playerhp
     global turn
@@ -931,9 +925,7 @@ while True:
             if userinput == "move west":
                 forestcell = 11
             elif userinput == "move north":
-                bank = "dungeon2"
-                print("End of demo.")
-                exit()
+                forestcell = 15
             elif userinput == "move east":
                 forestcell = 13
             elif userinput == "move south":
@@ -988,6 +980,32 @@ while True:
                 forestcell = 10
             elif userinput == "move north":
                 forestcell = 13
+            elif userinput == "help":
+                help()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "heal":
+                heal()
+            elif userinput == "map":
+                map()
+            else:
+                print("Invalid Command!")
+                
+        elif forestcell == 15:
+            monster = random.choice(["Bear", "Goblin", "Baby Dragon", "Spider"])
+            encounter()
+            print("Forest. Cell 15. There is an entrance in the ground. East, South.")
+            userinput = input("Forest>")
+            if userinput == "move east":
+                forestcell = 10
+            elif userinput == "move south":
+                forestcell = 12
+            elif userinput == "enter":
+                bank = "dungeon2"
+                dungeon2cell = 1
             elif userinput == "help":
                 help()
             elif userinput == "stats":
@@ -2047,7 +2065,7 @@ while True:
             boss = "Taro"
             userinput = input("Taro's Dungeon> ")
             encounter()
-            if boss1flag == True:
+            if boss1flag == 1:
                 print("You feel a mysterious prescence in the room.")
                 time.sleep(1)
                 print("A shadow looms in the corner.")
@@ -2060,7 +2078,6 @@ while True:
                 time.sleep(0.5)
                 print("Taro attacks!")
                 taro_boss_encounter()
-                boss1flag = False
             else:
                 if userinput == "move north":
                     dungeon1cell = 17
@@ -2077,3 +2094,472 @@ while True:
                     stat()
                 else:
                     print("Invalid Command!")
+
+    # Dungeon 2
+
+    elif bank == "dungeon2":
+        enemylevel = round(playerlevel * 0.75)
+        bosslevel = playerlevel
+        if dungeon2cell == 1:
+            print("Mindflower's Dungeon. Cell 1. You can leave the dungeon here. West, South.")
+            monster = random.choice(["Bear", "Knight"])
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if userinput == "leave":
+                bank = "forest1"
+                forestcell = 15
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "move south":
+                dungeon2cell = 3
+            elif userinput == "move west":
+                dungeon2cell = 2
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+                
+            # --- Cell 2 ---
+        elif dungeon2cell == 2:
+            print("Mindflower's Dungeon. Cell 2. East.")
+            monster = random.choice(["Knight", "Shadow"])
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if userinput == "move east":
+                dungeon2cell = 1
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 3 ---
+        elif dungeon2cell == 3:
+            print("Mindflower's Dungeon. Cell 3. North, East, South.")
+            monster = random.choice(["Slime", "Spider"])
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if userinput == "move north":
+                dungeon2cell = 1
+            elif userinput == "move east":
+                dungeon2cell = 4
+            elif userinput == "move south":
+                dungeon2cell = 11
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 4 ---
+        elif dungeon2cell == 4:
+            print("Mindflower's Dungeon. Cell 4. East, West.")
+            monster = random.choice(["Knight", "Bandit"])
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if userinput == "move east":
+                dungeon2cell = 5
+            elif userinput == "move west":
+                dungeon2cell = 3
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 5 ---
+        elif dungeon2cell == 5:
+            print("Mindflower's Dungeon. Cell 5. West, South.")
+            monster = random.choice(["Imp", "Knight"])
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if userinput == "move west":
+                dungeon2cell = 4
+            elif userinput == "move south":
+                dungeon2cell = 6
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 6 ---
+        elif dungeon2cell == 6:
+            print("Mindflower's Dungeon. Cell 6. North, East.")
+            monster = random.choice(["Shadow", "Wisp"])
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if userinput == "move north":
+                dungeon2cell = 5
+            elif userinput == "move east":
+                dungeon2cell = 7
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 7 ---
+        elif dungeon2cell == 7:
+            print("Mindflower's Dungeon. Cell 7. West.")
+            monster = random.choice(["Imp", "Knight"])
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if userinput == "move west":
+                dungeon2cell = 6
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 8 ---
+        elif dungeon2cell == 8:
+            print("Mindflower's Dungeon. Cell 8. South.")
+            monster = random.choice(["Spider", "Shade"])
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if userinput == "move south":
+                dungeon2cell = 9
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 9 ---
+        elif dungeon2cell == 9:
+            print("Mindflower's Dungeon. Cell 9. North, South, East.")
+            monster = random.choice(["Spider", "Slime"])
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if userinput == "move north":
+                dungeon2cell = 8
+            elif userinput == "move east":
+                dungeon2cell = 10
+            elif userinput == "move south":
+                dungeon2cell = 12
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 10 ---
+        elif dungeon2cell == 10:
+            print("Mindflower's Dungeon. Cell 10. East, West.")
+            monster = random.choice(["Knight", "Slime"])
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if userinput == "move east":
+                dungeon2cell = 11
+            elif userinput == "move west":
+                dungeon2cell = 9
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 11 ---
+        elif dungeon2cell == 11:
+            print("Mindflower's Dungeon. Cell 11. North, South, West.")
+            monster = random.choice(["Knight", "Specter"])
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if userinput == "move north":
+                dungeon2cell = 3
+            elif userinput == "move south":
+                dungeon2cell = 13
+            elif userinput == "move west":
+                dungeon2cell = 10
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 12 ---
+        elif dungeon2cell == 12:
+            print("Mindflower's Dungeon. Cell 12. North.")
+            monster = random.choice(["Ghost", "Wraith"])
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if userinput == "move north":
+                dungeon2cell = 9
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 13 ---
+        elif dungeon2cell == 13:
+            print("Mindflower's Dungeon. Cell 13. North, South.")
+            monster = random.choice(["Ghost", "Shade"])
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if userinput == "move north":
+                dungeon2cell = 11
+            elif userinput == "move south":
+                dungeon2cell = 15
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 14 ---
+        elif dungeon2cell == 14:
+            print("Mindflower's Dungeon. Cell 14. South, East.")
+            monster = random.choice(["Shade", "Slime"])
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if userinput == "move south":
+                dungeon2cell = 19
+            elif userinput == "move east":
+                dungeon2cell = 15
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 15 ---
+        elif dungeon2cell == 15:
+            print("Mindflower's Dungeon. Cell 15. North, East, West.")
+            monster = random.choice(["Wisp", "Specter"])
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if userinput == "move north":
+                dungeon2cell = 13
+            elif userinput == "move east":
+                dungeon2cell = 16
+            elif userinput == "move west":
+                dungeon2cell = 14
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 16 ---
+        elif dungeon2cell == 16:
+            print("Mindflower's Dungeon. Cell 16. East, West.")
+            monster = random.choice(["Specter", "Wisp"])
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if userinput == "move east":
+                dungeon2cell = 17
+            elif userinput == "move west":
+                dungeon2cell = 15
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 17 ---
+        elif dungeon2cell == 17:
+            print("Mindflower's Dungeon. Cell 17. West, South.")
+            monster = random.choice(["Shade", "Imp"])
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if userinput == "move west":
+                dungeon2cell = 16
+            elif userinput == "move south":
+                dungeon2cell = 18
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 18 (Boss Room) ---
+        elif dungeon2cell == 18:
+            print("Mindflower's Dungeon. Cell 18. North.")
+            boss = "Mindflower"
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if boss2flag == True:
+                print("You feel psychic pressure building in the air...")
+                time.sleep(1)
+                print("A whisper echoes through your mind.")
+                time.sleep(1)
+                print("A jellyfish-like shape floats about in the darkness.")
+                print("The Mindflower awakens!")
+                mindflower_boss_encounter()
+            else:
+                if userinput == "move north":
+                    dungeon2cell = 17
+                elif userinput == "heal":
+                    heal()
+                elif userinput == "help":
+                    help()
+                elif userinput == "map":
+                    map()
+                elif userinput == "wait":
+                    print("You waited.")
+                    encounter()
+                elif userinput == "stats":
+                    stat()
+                else:
+                    print("Invalid Command!")
+    
+        # --- Cell 19 ---
+        elif dungeon2cell == 19:
+            print("Mindflower's Dungeon. Cell 19. North.")
+            monster = random.choice(["Ghost", "Shade"])
+            userinput = input("Mindflower's Dungeon> ")
+            encounter()
+            if userinput == "move north":
+                dungeon2cell = 14
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+                
