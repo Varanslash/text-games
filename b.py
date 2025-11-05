@@ -8,18 +8,19 @@ import time
 # Universal Commands
 
 def help():
-    print("move [cardinal direction]\ntake [item]\ntalk [npc]\nleave\ninspect [thing]\nmap")
+    print("move [cardinal direction]\ntake [item]\ntalk [npc]\nleave\ninspect [thing]\nmap\nenter")
 
 def heal():
     global playerhp
     playerhp += random.choice(range(1, 10)) * playerlevel
-    if playerhp > 50 + (constitution * playerlevel):
-        playerhp = 50 + (constitution * playerlevel)
+    if playerhp > 50 + ((constitution * playerlevel) * 2):
+        playerhp = 50 + ((constitution * playerlevel) * 2)
     print("Player HP:", playerhp)
         
 def map():
     if bank == "forest1":
-        print("""        [11]{12}[13]
+        print("""            [15]
+        [11][12][13]
     [8 ][9 ][10][14]
 {7 ][5 ][4 ][3 ]
     [6 ][1 ][2 ]""")
@@ -51,12 +52,32 @@ def map():
 [18]""")
 
     elif bank == "dungeon2":
-        print("""   [2 ][1 ]
+        print("""    [2 ][1 ]
 [8 ]    [3 ][4 ][ 5]
 [9 ][10][11]    [6 ][7 ]
 [12]    [13]
     [14][15][16][17]
     [19]        [18]""")
+    
+    elif bank == "peatbogs":
+        print("""    [9 ][10][11]
+        [8 ][12][13]
+    [17][7 ][14]
+    [3 ][5 ][15][16]
+[1 ][2 ]    [18]
+    [6 ][4 ]
+        [19][20]
+            [21][22]
+                [23][24][25]""")
+    
+    elif bank == "dungeon3":
+        print("""                [1 ]
+        [2 ][3 ][4 ][5 ][6 ]
+            [7 ]    [8 ]
+[9 ][10][11][12]    [13][14]
+[15]    [16]        [17]
+[18]    [19][20]    [21][22][23]
+            [24]            [25]""")
                             
 def stat():
     print("STR:", strength)
@@ -93,7 +114,7 @@ constitution = random.choice(range(3, 21))
 intelligence = random.choice(range(3, 21))
 wisdom = random.choice(range(3, 21))
 charisma = random.choice(range(3, 21))
-playerhp = 50 + (constitution * playerlevel)
+playerhp = 50 + ((constitution * playerlevel) * 2)
 boss1flag = True
 boss2flag = True
 
@@ -269,6 +290,8 @@ def enemyscale():
     global enemylevel
     global playerlevel
     enemylevel = round(playerlevel / 2)
+    
+# Bosses
 
 def taro_boss_encounter():
     global bosslevel
@@ -638,6 +661,8 @@ while True:
             forestcell = 1
         elif userinput == "help":
             help()
+        elif userinput == "stats":
+            stat()
         else:
             print("Invalid Command!")
             
@@ -1026,7 +1051,8 @@ while True:
             print("Forest. Cell 15. There is an entrance in the ground. East, South.")
             userinput = input("Forest>")
             if userinput == "move east":
-                forestcell = 10
+                bank = "peatbogs"
+                peatbogscell = 1
             elif userinput == "move south":
                 forestcell = 12
             elif userinput == "enter":
@@ -2575,6 +2601,1223 @@ while True:
             encounter()
             if userinput == "move north":
                 dungeon2cell = 14
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+                
+    # Peatbogs
+                
+    elif bank == "peatbogs":
+        if peatbogscell == 1:
+            print("Peatbogs. Cell 1. East, West.")
+            monster = random.choice(["Ghost", "Shade"])
+            userinput = input("Peatbogs>")
+            encounter()
+            if userinput == "move east":
+                peatbogscell = 2
+            elif userinput == "move west":
+                bank = "forest1"
+                forestcell = 15
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+                
+            # --- Cell 2 ---
+        elif peatbogscell == 2:
+            print("Peatbogs. Cell 2. North, South, West.")
+            monster = random.choice(["Bogling", "Leech"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move north":
+                peatbogscell = 3
+            elif userinput == "move south":
+                peatbogscell = 6
+            elif userinput == "move west":
+                peatbogscell = 1
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 3 ---
+        elif peatbogscell == 3:
+            print("Peatbogs. Cell 3. East, South, North.")
+            monster = random.choice(["Swamp Slime", "Wisp"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move east":
+                peatbogscell = 5
+            elif userinput == "move south":
+                peatbogscell = 2
+            elif userinput == "move north":
+                peatbogscell = 17
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 4 ---
+        elif peatbogscell == 4:
+            print("Peatbogs. Cell 4. West, South.")
+            monster = random.choice(["Bogling", "Leech"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move south":
+                peatbogscell = 19
+            elif userinput == "move west":
+                peatbogscell = 6
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 5 ---
+        elif peatbogscell == 5:
+            print("Peatbogs. Cell 5. West, East, North.")
+            monster = random.choice(["Leech", "Swamp Slime"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move west":
+                peatbogscell = 3
+            elif userinput == "move east":
+                peatbogscell = 15
+            elif userinput == "move north":
+                peatbogscell = 7
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 6 ---
+        elif peatbogscell == 6:
+            print("Peatbogs. Cell 6. North, East.")
+            monster = random.choice(["Bogling", "Swamp Slime"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move north":
+                peatbogscell = 2
+            elif userinput == "move east":
+                peatbogscell = 4
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 7 ---
+        elif peatbogscell == 7:
+            print("Peatbogs. Cell 7. North, West, East, South.")
+            monster = random.choice(["Witch", "Swamp Drake"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move north":
+                peatbogscell = 8
+            elif userinput == "move west":
+                peatbogscell = 17
+            elif userinput == "move east":
+                peatbogscell = 14
+            elif userinput == "move south":
+                peatbogscell = 5
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 8 ---
+        elif peatbogscell == 8:
+            print("Peatbogs. Cell 8. East, South, North.")
+            monster = random.choice(["Leech", "Wisp"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move east":
+                peatbogscell = 12
+            elif userinput == "move south":
+                peatbogscell = 7
+            elif userinput == "move north":
+                peatbogscell = 10
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 9 ---
+        elif peatbogscell == 9:
+            print("Peatbogs. Cell 9. East.")
+            monster = random.choice(["Bogling", "Peat Horror"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move east":
+                peatbogscell = 10
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 10 ---
+        elif peatbogscell == 10:
+            print("Peatbogs. Cell 10. East, West, South.")
+            monster = random.choice(["Swamp Slime", "Leech"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move east":
+                peatbogscell = 11
+            elif userinput == "move west":
+                peatbogscell = 9
+            elif userinput == "move south":
+                peatbogscell = 8
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 11 ---
+        elif peatbogscell == 11:
+            print("Peatbogs. Cell 11. West, South.")
+            monster = random.choice(["Swamp Drake", "Peat Horror"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move west":
+                peatbogscell = 10
+            elif userinput == "move south":
+                peatbogscell = 12
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 12 ---
+        elif peatbogscell == 12:
+            print("Peatbogs. Cell 12. West, East, South, North.")
+            monster = random.choice(["Leech", "Wisp"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move west":
+                peatbogscell = 8
+            elif userinput == "move east":
+                peatbogscell = 13
+            elif userinput == "move south":
+                peatbogscell = 14
+            elif userinput == "move north":
+                peatbogscell = 11
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 13 ---
+        elif peatbogscell == 13:
+            print("Peatbogs. Cell 13. West.")
+            monster = random.choice(["Swamp Drake", "Bogling"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move west":
+                peatbogscell = 12
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 14 ---
+        elif peatbogscell == 14:
+            print("Peatbogs. Cell 14. West, South, North.")
+            monster = random.choice(["Witch", "Peat Horror"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move west":
+                peatbogscell = 7
+            elif userinput == "move south":
+                peatbogscell = 15
+            elif userinput == "move north":
+                peatbogscell = 12
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 15 ---
+        elif peatbogscell == 15:
+            print("Peatbogs. Cell 15. West, East, South, North.")
+            monster = random.choice(["Leech", "Swamp Slime"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move west":
+                peatbogscell = 5
+            elif userinput == "move east":
+                peatbogscell = 16
+            elif userinput == "move south":
+                peatbogscell = 18
+            elif userinput == "move north":
+                peatbogscell = 14
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 16 ---
+        elif peatbogscell == 16:
+            print("Peatbogs. Cell 16. West.")
+            monster = random.choice(["Swamp Drake", "Witch"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move west":
+                peatbogscell = 15
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 17 ---
+        elif peatbogscell == 17:
+            print("Peatbogs. Cell 17. East, South.")
+            monster = random.choice(["Peat Horror", "Bogling"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move east":
+                peatbogscell = 7
+            elif userinput == "move south":
+                peatbogscell = 3
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cell 18 ---
+        elif peatbogscell == 18:
+            print("Peatbogs. Cell 18. North.")
+            monster = random.choice(["Peat Horror", "Bogling"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move north":
+                peatbogscell = 17
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        # --- Cells 19–25 ---
+        elif peatbogscell == 19:
+            print("Peatbogs. Cell 19. North, East.")
+            monster = random.choice(["Leech", "Wisp"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move north":
+                peatbogscell = 4
+            elif userinput == "move east":
+                peatbogscell = 20
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        elif peatbogscell == 20:
+            print("Peatbogs. Cell 20. West, South.")
+            monster = random.choice(["Bogling", "Leech"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move west":
+                peatbogscell = 19
+            elif userinput == "move south":
+                peatbogscell = 21
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        elif peatbogscell == 21:
+            print("Peatbogs. Cell 21. North, East.")
+            monster = random.choice(["Swamp Drake", "Witch"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move north":
+                peatbogscell = 20
+            elif userinput == "move east":
+                peatbogscell = 22
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        elif peatbogscell == 22:
+            print("Peatbogs. Cell 22. West, South.")
+            monster = random.choice(["Bogling", "Swamp Slime"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move west":
+                peatbogscell = 21
+            elif userinput == "move south":
+                peatbogscell = 23
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        elif peatbogscell == 23:
+            print("Peatbogs. Cell 23. East, North.")
+            monster = random.choice(["Peat Horror", "Witch"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move east":
+                peatbogscell = 24
+            elif userinput == "move north":
+                peatbogscell = 22
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        elif peatbogscell == 24:
+            print("Peatbogs. Cell 24. East, West.")
+            monster = random.choice(["Wisp", "Leech"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move east":
+                peatbogscell = 25
+            elif userinput == "move west":
+                peatbogscell = 23
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+    
+        elif peatbogscell == 25:
+            print("Peatbogs. Cell 25. West. The bog bubbles ominously here, and the air smells of death.")
+            monster = random.choice(["Swamp Drake", "Peat Horror"])
+            userinput = input("Peatbogs> ")
+            encounter()
+            if userinput == "move west":
+                peatbogscell = 24
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+                
+    # Abandoned Old House
+    
+    elif bank == "dungeon3":
+        if dungeon3cell == 1:
+            print("Old House. Cell 1. South, North.")
+            monster = random.choice(["Poltergeist", "Ghoul"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move south":
+                dungeon3cell = 4
+            elif userinput == "move north":
+                bank = "graveyard1"
+                gravecell = 15
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+        elif dungeon3cell == 2:
+            print("Old House. Cell 2. East, South.")
+            monster = random.choice(["Ghoul", "Haunted Armor"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move east":
+                dungeon3cell = 3
+            elif userinput == "move south":
+                dungeon3cell = 9
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 3:
+            print("Old House. Cell 3. West, East, South.")
+            monster = random.choice(["Ghoul", "Specter"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move west":
+                dungeon3cell = 2
+            elif userinput == "move east":
+                dungeon3cell = 4
+            elif userinput == "move south":
+                dungeon3cell = 10
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 4:
+            print("Old House. Cell 4. West, East, North, South.")
+            monster = random.choice(["Poltergeist", "Wraith"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move west":
+                dungeon3cell = 3
+            elif userinput == "move east":
+                dungeon3cell = 5
+            elif userinput == "move north":
+                dungeon3cell = 1
+            elif userinput == "move south":
+                dungeon3cell = 11
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 5:
+            print("Old House. Cell 5. West, East, South.")
+            monster = random.choice(["Ghoul", "Haunted Candle"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move west":
+                dungeon3cell = 4
+            elif userinput == "move east":
+                dungeon3cell = 6
+            elif userinput == "move south":
+                dungeon3cell = 12
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 6:
+            print("Old House. Cell 6. West, South.")
+            monster = random.choice(["Spirit", "Cursed Doll"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move west":
+                dungeon3cell = 5
+            elif userinput == "move south":
+                dungeon3cell = 13
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 7:
+            print("Old House. Cell 7. East, West.")
+            monster = random.choice(["Phantom", "Specter"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move east":
+                dungeon3cell = 8
+            elif userinput == "move west":
+                dungeon3cell = 3
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 8:
+            print("Old House. Cell 8. West, South.")
+            monster = random.choice(["Ghoul", "Haunted Candle"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move west":
+                dungeon3cell = 7
+            elif userinput == "move south":
+                dungeon3cell = 13
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 9:
+            print("Old House. Cell 9. East, North, South.")
+            monster = random.choice(["Shade", "Wraith"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move east":
+                dungeon3cell = 10
+            elif userinput == "move north":
+                dungeon3cell = 2
+            elif userinput == "move south":
+                dungeon3cell = 15
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 10:
+            print("Old House. Cell 10. West, East, South.")
+            monster = random.choice(["Ghoul", "Haunted Armor"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move west":
+                dungeon3cell = 9
+            elif userinput == "move east":
+                dungeon3cell = 11
+            elif userinput == "move south":
+                dungeon3cell = 16
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 11:
+            print("Old House. Cell 11. West, East, South.")
+            monster = random.choice(["Specter", "Poltergeist"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move west":
+                dungeon3cell = 10
+            elif userinput == "move east":
+                dungeon3cell = 12
+            elif userinput == "move south":
+                dungeon3cell = 17
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+                
+        elif dungeon3cell == 12:
+            print("Old House. Cell 12. West, East, South.")
+            monster = random.choice(["Haunted Armor", "Specter"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move west":
+                dungeon3cell = 11
+            elif userinput == "move east":
+                dungeon3cell = 13
+            elif userinput == "move south":
+                dungeon3cell = 18
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 13:
+            print("Old House. Cell 13. West, East, South.")
+            monster = random.choice(["Spirit", "Shade"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move west":
+                dungeon3cell = 12
+            elif userinput == "move east":
+                dungeon3cell = 14
+            elif userinput == "move south":
+                dungeon3cell = 19
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 14:
+            print("Old House. Cell 14. West, South.")
+            monster = random.choice(["Poltergeist", "Haunted Candle"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move west":
+                dungeon3cell = 13
+            elif userinput == "move south":
+                dungeon3cell = 20
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 15:
+            print("Old House. Cell 15. North, East, South.")
+            monster = random.choice(["Ghoul", "Cursed Doll"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move north":
+                dungeon3cell = 9
+            elif userinput == "move east":
+                dungeon3cell = 16
+            elif userinput == "move south":
+                dungeon3cell = 18
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 16:
+            print("Old House. Cell 16. West, East, South.")
+            monster = random.choice(["Wraith", "Specter"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move west":
+                dungeon3cell = 15
+            elif userinput == "move east":
+                dungeon3cell = 17
+            elif userinput == "move south":
+                dungeon3cell = 19
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 17:
+            print("Old House. Cell 17. West, North, East.")
+            monster = random.choice(["Haunted Armor", "Phantom"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move west":
+                dungeon3cell = 16
+            elif userinput == "move north":
+                dungeon3cell = 11
+            elif userinput == "move east":
+                dungeon3cell = 21
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 18:
+            print("Old House. Cell 18. North, South.")
+            monster = random.choice(["Specter", "Ghoul"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move north":
+                dungeon3cell = 15
+            elif userinput == "move south":
+                dungeon3cell = 24
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 19:
+            print("Old House. Cell 19. North, East, South.")
+            monster = random.choice(["Shade", "Wraith"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move north":
+                dungeon3cell = 13
+            elif userinput == "move east":
+                dungeon3cell = 20
+            elif userinput == "move south":
+                dungeon3cell = 24
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 20:
+            print("Old House. Cell 20. West, East, South.")
+            monster = random.choice(["Spirit", "Phantom"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move west":
+                dungeon3cell = 19
+            elif userinput == "move east":
+                dungeon3cell = 21
+            elif userinput == "move south":
+                dungeon3cell = 25
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 21:
+            print("Old House. Cell 21. West, East, South.")
+            monster = random.choice(["Haunted Candle", "Specter"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move west":
+                dungeon3cell = 20
+            elif userinput == "move east":
+                dungeon3cell = 22
+            elif userinput == "move south":
+                dungeon3cell = 25
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 22:
+            print("Old House. Cell 22. West, East.")
+            monster = random.choice(["Cursed Doll", "Poltergeist"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move west":
+                dungeon3cell = 21
+            elif userinput == "move east":
+                dungeon3cell = 23
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 23:
+            print("Old House. Cell 23. West.")
+            monster = random.choice(["Phantom", "Haunted Armor"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move west":
+                dungeon3cell = 22
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 24:
+            print("Old House. Cell 24. North, East.")
+            monster = random.choice(["Wraith", "Shade"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move north":
+                dungeon3cell = 19
+            elif userinput == "move east":
+                dungeon3cell = 25
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            else:
+                print("Invalid Command!")
+
+        elif dungeon3cell == 25:
+            print("Old House. Cell 25. North, West.")
+            monster = random.choice(["Specter", "Haunted Candle"])
+            userinput = input("Old House>")
+            encounter()
+            if userinput == "move north":
+                dungeon3cell = 20
+            elif userinput == "move west":
+                dungeon3cell = 24
             elif userinput == "heal":
                 heal()
             elif userinput == "help":
