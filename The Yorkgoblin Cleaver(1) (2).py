@@ -9,7 +9,8 @@ import json
 # Universal Commands
 
 def help():
-    print("move [cardinal direction]\ntake [item]\ntalk [npc]\nleave\ninspect [thing]\nmap\nenter\nopen chest\nswitch spell")
+    print("ONLY TYPE IN lowercase LETTERS, like this")
+    print("move [cardinal direction]\ntake [item]\ntalk [npc]\nleave\ninspect [thing]\nmap\nenter\nopen chest\nswitch spell\nrest")
 
 def heal():
     global playerhp
@@ -54,7 +55,7 @@ def map():
 
     elif bank == "dungeon2":
         print("""    [2 ][1 ]
-[8 ]    [3 ][4 ][ 5]
+[8 ]    [3 ][4 ][5 ]
 [9 ][10][11]    [6 ][7 ]
 [12]    [13]
     [14][15][16][17]
@@ -133,6 +134,36 @@ def map():
     [8 ]    [9 ]    [10]
     [11][12][15][14][13]
             [16]""")
+        
+    elif bank == "caves1":
+        if lightstatue == True:
+            print("""                [4 ][5 ]
+        [11][8 ][3 ][2 ][1 ]
+        [10][9 ][6 ][7 ]
+        [13][12]
+        [15][14]
+    [18][17][16]
+    [19][20]
+[21][22][25]
+[23][24][26]
+    [27]""")
+        else:
+            print("It's too dark to see your map.")
+
+    elif bank == "caves2":
+        if lightstatue == True:
+            print("""                            [17]
+        [5 ][6 ]    [11][14][16]
+    [3 ][4 ][7 ][9 ][10][13][15]
+[1 ][2 ]    [8 ]    [12]""")
+        else:
+            print("It's too dark to see your map.")
+    elif bank == "courtyard1":
+        print("""[18]
+[14][15]        [16][17]
+    [8 ][9 ][10][11][12][13]
+    [4 ][5 ][6 ][7 ]
+        [2 ][1 ][3 ]""")
 
 def stat():
     print("+--- STATS ---+")
@@ -167,8 +198,6 @@ def switch_spell():
         print("Invalid Spell!")
 
 # Variables
-
-import random
 
 game = {
     # Setting Variables
@@ -284,6 +313,10 @@ game = {
     "puzzle9flag": True,
     "puzzle10flag": True,
 
+    "lever1": True,
+    "lever2": True,
+    "lever3": True,
+
     # Setting Spellslots
     "spellslot1": False,
     "spellslot2": False,
@@ -375,7 +408,9 @@ game = {
     # Misc.
     "classflag": True,
     "introflag": True,
-    "playerclass": "placeholder"
+    "playerclass": "placeholder",
+    "lightstatue": False,
+    "first_weapon": 0
 }
 
 for key, value in game.items():
@@ -420,6 +455,7 @@ def encounter():
     global enemycharisma
     global playerparalyze
     global revivalflag
+    global playerhp
     monsterencounter = random.choice(range(1, 11))
     if monsterencounter == 10 or forcedencounter == 1:
         enemystrength = random.choice(range(10, 15))
@@ -570,6 +606,7 @@ def taro_boss_encounter():
     global playerparalyze
     global spellslot5
     global revivalflag
+    global playerhp
     if boss1flag == True:
         turn = 1
         bosshp = 80 + (bosslevel * taroconstitution)
@@ -664,6 +701,7 @@ def mindflower_boss_encounter():
     global mindflowerconstitution
     global playerparalyze
     global revivalflag
+    global playerhp
     if boss2flag == True:
         turn = 1
         bosshp = 60 + (bosslevel * mindflowerconstitution)
@@ -759,6 +797,7 @@ def dracula_boss_encounter():
     global playerparalyze
     global spellslot3
     global revivalflag
+    global playerhp
     if boss3flag == True:
         turn = 1
         bosshp = 60 + (bosslevel * draculaconstitution)
@@ -854,6 +893,7 @@ def sebek_boss_encounter():
     global sebekconstitution
     global playerparalyze
     global revivalflag
+    global playerhp
     if boss4flag == True:
         turn = 1
         print(boss, "attacks!")
@@ -950,6 +990,7 @@ def lolth_boss_encounter():
     global lolthconstitution
     global playerparalyze
     global revivalflag
+    global playerhp
     if lolthflag == True:
         turn = 1
         bosshp = 100 + (bosslevel * lolthconstitution)
@@ -1630,60 +1671,59 @@ if introflag == True:
     Druid (-1, +1, +4, +3, +2, +0)
     Bard (-2, +1, +2, +3, +3, +5)
     Barbarian (+4, +3, +3, -2, -1, -2)""")
-    if classflag == True:
+    while classflag == True:
         userinput = input("Choice?>")
         if userinput in playerclasspicker:
-            playerclass = userinput
-            if playerclass == "fighter":
+            if userinput == "fighter":
                 strength += 4
                 dexterity += 4
                 constitution += 1
                 intelligence += 0
                 wisdom += 0
                 charisma -= 3
-            elif playerclass == "wizard":
+            elif userinput == "wizard":
                 strength -= 3
                 dexterity += 0
                 constitution += 1
                 intelligence += 5
                 wisdom += 4
                 charisma += 0
-            elif playerclass == "paladin":
+            elif userinput == "paladin":
                 strength += 3
                 dexterity += 2
                 constitution += 1
                 intelligence += 4
                 wisdom += 1
                 charisma -= 3
-            elif playerclass == "cleric":
+            elif userinput == "cleric":
                 strength -= 2
                 dexterity += 1
                 constitution += 4
                 intelligence += 4
                 wisdom += 3
                 charisma += 0
-            elif playerclass == "rogue":
+            elif userinput == "rogue":
                 strength -= 2
                 dexterity += 4
                 constitution += 2
                 intelligence += 3
                 wisdom += 1
                 charisma += 2
-            elif playerclass == "druid":
+            elif userinput == "druid":
                 strength -= 1
                 dexterity += 1
                 constitution += 4
                 intelligence += 3
                 wisdom += 2
                 charisma += 0
-            elif playerclass == "bard":
+            elif userinput == "bard":
                 strength -= 2
                 dexterity += 1
                 constitution += 2
                 intelligence += 3
                 wisdom += 3
                 charisma += 5
-            elif playerclass == "barbarian":
+            elif userinput == "barbarian":
                 strength -= 4
                 dexterity += 3
                 constitution += 3
@@ -1692,6 +1732,8 @@ if introflag == True:
                 charisma += -2
             classflag = False
             introflag = False
+            playerclass = userinput
+            break
         else:
             print("Invalid class!")
 
@@ -1719,6 +1761,8 @@ manualsavedata() # This loads your data
 
 while True:
 
+    # --- Map 1 ---
+
     # Village 1
     
     if bank == "village1":
@@ -1740,18 +1784,20 @@ while True:
                     if userinput == "bow":
                         print("You remind me of someone I met who lived in a place called District 12.")
                         weapon = "bow"
+                        first_weapon = 1
                     elif userinput == "sword":
                         print("Shopkeeper: I see you're a slasher, eh?")
                         weapon = "sword"
+                        first_weapon = 1
                     elif userinput == "staff":
                         print("Shopkeeper: A magic user? Those are rare around here! Haha!")
                         staff = 1
+                        first_weapon = 1
                     elif userinput == "leave":
                         print("Shopkeeper: Goodbye!")
                         break
                     else:
                         print("Shopkeeper: I don't have that weapon!")
-                    first_weapon = 1
                 else:
                     if userinput == "leave":
                         print("Shopkeeper: Goodbye!")
@@ -3114,7 +3160,7 @@ while True:
         # --- Cell 8 ---
         
         elif dungeon1cell == 8:
-            print("Taro's Dungeon. Cell 8. East, North.")
+            print("Taro's Dungeon. Cell 8. East, North. A small red lever rests on the wall.")
             monster = random.choice(["Slime", "Skeleton"])
             userinput = input("Taro's Dungeon> ")
             encounter()
@@ -3122,6 +3168,9 @@ while True:
                 dungeon1cell = 9
             elif userinput == "move north":
                 dungeon1cell = 7
+            elif userinput == "inspect lever":
+                print("You clicked the lever.")
+                lever1 = False
             elif userinput == "heal":
                 heal()
             elif userinput == "help":
@@ -3254,7 +3303,7 @@ while True:
         # --- Cell 13 ---
         
         elif dungeon1cell == 13:
-            print("Taro's Dungeon. Cell 13. East, West.")
+            print("Taro's Dungeon. Cell 13. East, West. A green lever sits on the floor.")
             monster = random.choice(["Knight", "Orc"])
             userinput = input("Taro's Dungeon> ")
             encounter()
@@ -3262,6 +3311,9 @@ while True:
                 dungeon1cell = 12
             elif userinput == "move west":
                 dungeon1cell = 14
+            elif userinput == "inspect lever":
+                print("You clicked the lever.")
+                lever2 = False
             elif userinput == "heal":
                 heal()
             elif userinput == "help":
@@ -3346,6 +3398,13 @@ while True:
                     print("You found a magic scroll!")
                     spellslot1 = True
                     chest2flag = False
+                    print("A blue lever sits inside the chest.")
+            elif userinput == "inspect lever":
+                if chest2flag == False:
+                    print("You clicked the lever.")
+                    lever3 = False
+                else:
+                    print("How the fuck do you even know this thing is here?")
             elif userinput == "heal":
                 heal()
             elif userinput == "help":
@@ -3365,12 +3424,16 @@ while True:
         # --- Cell 17 ---
         
         elif dungeon1cell == 17:
-            print("Taro's Dungeon. Cell 17. South, North.")
+            print("Taro's Dungeon. Cell 17. South, North. A gate blocks your way.")
             monster = random.choice(["Spider", "Bat"])
             userinput = input("Taro's Dungeon> ")
             encounter()
             if userinput == "move south":
-                dungeon1cell = 18
+                if lever1 == False and lever2 == False and lever3 == False:
+                    print("The gate opens for you.")
+                    dungeon1cell = 18
+                else:
+                    print("The gat remains closed. There are three slots on the gate. One is red, one is green, and one is blue.")
             elif userinput == "move north":
                 dungeon1cell = 16
             elif userinput == "heal":
@@ -7807,6 +7870,9 @@ while True:
                 village3cell = 13
             elif userinput == "move east":
                 village3cell = 4
+            elif userinput == "move west":
+                bank = "caves1"
+                caves1cell = 1
             elif userinput == "help":
                 help()
             elif userinput == "heal":
@@ -8871,6 +8937,1620 @@ while True:
             encounter()
             if userinput == "move south":
                 dungeon5cell = 24
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+    # Caves 1
+
+    elif bank == "caves1":
+        enemylevel = (0.8 * playerlevel)
+        if caves1cell == 1:
+            print("Caves. Cell 1. It's too dark to see.")
+            monster = random.choice(["Grue", "Orc"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move east":
+                bank = "village3"
+                village3cell = 14
+            elif userinput == "move west":
+                caves1cell = 2 
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+    
+        elif caves1cell == 2:
+            print("Caves. Cell 2. It's too dark to see.")
+            monster = random.choice(["Grue", "Orc", "Bat"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves1cell = 1
+            elif userinput == "move east":
+                caves1cell = 3
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 3:
+            print("Caves. Cell 3. It's too dark to see.")
+            monster = random.choice(["Grue", "Orc", "Cave Troll"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves1cell = 2
+            elif userinput == "move east":
+                caves1cell = 4
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 4:
+            print("Caves. Cell 4. It's too dark to see.")
+            monster = random.choice(["Bat", "Giant Rat", "Orc"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves1cell = 3
+            elif userinput == "move south":
+                caves1cell = 8
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 5:
+            print("Caves. Cell 5. It's too dark to see.")
+            monster = random.choice(["Bat", "Spider", "Cave Troll"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves1cell = 4
+            elif userinput == "move south":
+                caves1cell = 7
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 6:
+            print("Caves. Cell 6. It's too dark to see.")
+            monster = random.choice(["Grue", "Giant Rat", "Spider"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves1cell = 7
+            elif userinput == "move east":
+                caves1cell = 9
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 7:
+            print("Caves. Cell 7. It's too dark to see.")
+            monster = random.choice(["Bat", "Spider", "Slime"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves1cell = 5
+            elif userinput == "move east":
+                caves1cell = 6
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 8:
+            print("Caves. Cell 8. It's too dark to see.")
+            monster = random.choice(["Cave Troll", "Grue", "Bat"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move south":
+                caves1cell = 11
+            elif userinput == "move west":
+                caves1cell = 9
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 9:
+            print("Caves. Cell 9. It's too dark to see.")
+            monster = random.choice(["Bat", "Spider", "Giant Rat"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move east":
+                caves1cell = 8
+            elif userinput == "move west":
+                caves1cell = 10
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 10:
+            print("Caves. Cell 10. It's too dark to see.")
+            monster = random.choice(["Slime", "Spider", "Bat"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move east":
+                caves1cell = 9
+            elif userinput == "move south":
+                caves1cell = 12
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 11:
+            print("Caves. Cell 11. It's too dark to see.")
+            monster = random.choice(["Cave Troll", "Orc", "Bat"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move north":
+                caves1cell = 8
+            elif userinput == "move south":
+                caves1cell = 13
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 12:
+            print("Caves. Cell 12. It's too dark to see.")
+            monster = random.choice(["Spider", "Bat", "Giant Rat"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move north":
+                caves1cell = 10
+            elif userinput == "move south":
+                caves1cell = 14
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 13:
+            print("Caves. Cell 13. It's too dark to see.")
+            monster = random.choice(["Orc", "Slime", "Grue"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move north":
+                caves1cell = 11
+            elif userinput == "move south":
+                caves1cell = 15
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 14:
+            print("Caves. Cell 14. It's too dark to see.")
+            monster = random.choice(["Spider", "Slime", "Bat"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move north":
+                caves1cell = 12
+            elif userinput == "move south":
+                caves1cell = 16
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 15:
+            print("Caves. Cell 15. It's too dark to see.")
+            monster = random.choice(["Grue", "Bat", "Cave Troll"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move north":
+                caves1cell = 13
+            elif userinput == "move south":
+                caves1cell = 17
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 16:
+            print("Caves. Cell 16. It's too dark to see.")
+            monster = random.choice(["Orc", "Giant Rat", "Spider"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move north":
+                caves1cell = 14
+            elif userinput == "move west":
+                caves1cell = 17
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 17:
+            print("Caves. Cell 17. It's too dark to see.")
+            monster = random.choice(["Cave Troll", "Slime", "Bat"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move north":
+                caves1cell = 15
+            elif userinput == "move south":
+                caves1cell = 18
+            elif userinput == "move east":
+                caves1cell = 16
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 18:
+            print("Caves. Cell 18. It's too dark to see.")
+            monster = random.choice(["Grue", "Orc", "Cave Troll"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move north":
+                caves1cell = 17
+            elif userinput == "move south":
+                caves1cell = 19
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 19:
+            print("Caves. Cell 19. It's too dark to see.")
+            monster = random.choice(["Orc", "Spider", "Slime"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move north":
+                caves1cell = 18
+            elif userinput == "move east":
+                caves1cell = 20
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 20:
+            print("Caves. Cell 20. It's too dark to see.")
+            monster = random.choice(["Cave Troll", "Giant Rat", "Grue"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves1cell = 19
+            elif userinput == "move north":
+                caves1cell = 18
+            elif userinput == "move south":
+                caves1cell = 22
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 21:
+            print("Caves. Cell 21. It's too dark to see.")
+            monster = random.choice(["Bat", "Orc", "Spider"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move east":
+                caves1cell = 22
+            elif userinput == "move south":
+                caves1cell = 23
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 22:
+            print("Caves. Cell 22. It's too dark to see.")
+            monster = random.choice(["Spider", "Grue", "Cave Troll"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves1cell = 21
+            elif userinput == "move east":
+                caves1cell = 25
+            elif userinput == "move south":
+                caves1cell = 24
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 23:
+            print("Caves. Cell 23. It's too dark to see.")
+            monster = random.choice(["Slime", "Spider", "Giant Rat"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move north":
+                caves1cell = 21
+            elif userinput == "move east":
+                caves1cell = 24
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 24:
+            print("Caves. Cell 24. It's too dark to see.")
+            monster = random.choice(["Orc", "Bat", "Slime"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves1cell = 23
+            elif userinput == "move east":
+                caves1cell = 26
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 25:
+            print("Caves. Cell 25. It's too dark to see.")
+            monster = random.choice(["Cave Troll", "Grue", "Bat"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves1cell = 22
+            elif userinput == "move south":
+                caves1cell = 26
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 26:
+            print("Caves. Cell 26. It's too dark to see.")
+            monster = random.choice(["Spider", "Slime", "Orc"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move north":
+                caves1cell = 25
+            elif userinput == "move west":
+                caves1cell = 24
+            elif userinput == "move south":
+                caves1cell = 27
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves1cell == 27:
+            print("Caves. Cell 27. It's too dark to see.")
+            monster = random.choice(["Grue", "Bat", "Cave Troll"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move north":
+                caves1cell = 26
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+    # Caves 2
+
+    elif bank == "caves2":
+        enemylevel = (0.8 * playerlevel)
+        if caves2cell == 1:
+            print("Caves. Cell 1. It's too dark to see.")
+            monster = random.choice(["Grue", "Orc"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move east":
+                caves2cell = 2
+            elif userinput == "move west":
+                bank = "highlands"
+                mountaincell = 12
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves2cell == 2:
+            print("Caves. Cell 2. It's too dark to see.")
+            monster = random.choice(["Bat", "Spider", "Orc"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves2cell = 1
+            elif userinput == "move north":
+                caves2cell = 4
+            elif userinput == "move east":
+                caves2cell = 8
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves2cell == 3:
+            print("Caves. Cell 3. It's too dark to see.")
+            monster = random.choice(["Grue", "Slime", "Bat"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move east":
+                caves2cell = 4
+            elif userinput == "move north":
+                caves2cell = 5
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves2cell == 4:
+            print("Caves. Cell 4. It's too dark to see.")
+            monster = random.choice(["Orc", "Cave Troll", "Spider"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves2cell = 3
+            elif userinput == "move east":
+                caves2cell = 7
+            elif userinput == "move north":
+                caves2cell = 6
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves2cell == 5:
+            print("Caves. Cell 5. It's too dark to see.")
+            monster = random.choice(["Spider", "Bat", "Grue"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move south":
+                caves2cell = 3
+            elif userinput == "move east":
+                caves2cell = 6
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves2cell == 6:
+            print("Caves. Cell 6. It's too dark to see.")
+            monster = random.choice(["Cave Troll", "Slime", "Orc"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves2cell = 5
+            elif userinput == "move south":
+                caves2cell = 4
+            elif userinput == "move east":
+                caves2cell = 7
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves2cell == 7:
+            print("Caves. Cell 7. It's too dark to see.")
+            monster = random.choice(["Bat", "Spider", "Slime"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves2cell = 6
+            elif userinput == "move east":
+                caves2cell = 9
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves2cell == 8:
+            print("Caves. Cell 8. It's too dark to see.")
+            monster = random.choice(["Grue", "Orc", "Cave Troll"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves2cell = 2
+            elif userinput == "move east":
+                caves2cell = 9
+            elif userinput == "move north":
+                caves2cell = 10
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves2cell == 9:
+            print("Caves. Cell 9. It's too dark to see.")
+            monster = random.choice(["Orc", "Slime", "Spider"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves2cell = 7
+            elif userinput == "move east":
+                caves2cell = 10
+            elif userinput == "move north":
+                caves2cell = 11
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves2cell == 10:
+            print("Caves. Cell 10. It's too dark to see.")
+            monster = random.choice(["Cave Troll", "Bat", "Orc"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves2cell = 9
+            elif userinput == "move east":
+                caves2cell = 13
+            elif userinput == "move north":
+                caves2cell = 12
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves2cell == 11:
+            print("Caves. Cell 11. It's too dark to see.")
+            monster = random.choice(["Slime", "Spider", "Grue"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move south":
+                caves2cell = 9
+            elif userinput == "move east":
+                caves2cell = 14
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves2cell == 12:
+            print("Caves. Cell 12. It's too dark to see.")
+            monster = random.choice(["Orc", "Bat", "Cave Troll"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move south":
+                caves2cell = 10
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves2cell == 13:
+            print("Caves. Cell 13. It's too dark to see.")
+            monster = random.choice(["Spider", "Slime", "Orc"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves2cell = 10
+            elif userinput == "move east":
+                caves2cell = 15
+            elif userinput == "move north":
+                caves2cell = 14
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves2cell == 14:
+            print("Caves. Cell 14. It's too dark to see.")
+            monster = random.choice(["Bat", "Grue", "Orc"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves2cell = 11
+            elif userinput == "move east":
+                caves2cell = 16
+            elif userinput == "move south":
+                caves2cell = 13
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves2cell == 15:
+            print("Caves. Cell 15. It's too dark to see.")
+            monster = random.choice(["Cave Troll", "Slime", "Spider"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves2cell = 13
+            elif userinput == "move north":
+                caves2cell = 16
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves2cell == 16:
+            print("Caves. Cell 16. It's too dark to see.")
+            monster = random.choice(["Orc", "Bat", "Grue"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move west":
+                caves2cell = 14
+            elif userinput == "move south":
+                caves2cell = 15
+            elif userinput == "move north":
+                caves2cell = 17
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif caves2cell == 17:
+            print("Caves. Cell 17. It's too dark to see.")
+            monster = random.choice(["Spider", "Grue", "Cave Troll"])
+            userinput = input("Caves>")
+            encounter()
+            if userinput == "move south":
+                caves2cell = 16
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+    # --- Map 2 ---
+
+    elif bank == "courtyard1":
+        enemylevel = playerlevel * 0.7
+        if courtyard1cell == 1:
+            print("Courtyard. Cell 1. North, East, West.")
+            monster = random.choice(["Gargoyle", "Knight", "Shade"])
+            userinput = input("Courtyard>")
+            encounter()
+            if userinput == "move north":
+                courtyard1cell = 5
+            elif userinput == "move east":
+                courtyard1cell = 3
+            elif userinput == "move west":
+                courtyard1cell = 2
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif courtyard1cell == 2:
+            print("Courtyard. Cell 2. North, East.")
+            monster = random.choice(["Shade", "Gargoyle"])
+            userinput = input("Courtyard>")
+            encounter()
+            if userinput == "move north":
+                courtyard1cell = 4
+            elif userinput == "move east":
+                courtyard1cell = 1
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif courtyard1cell == 3:
+            print("Courtyard. Cell 3. North, West.")
+            monster = random.choice(["Knight", "Gargoyle"])
+            userinput = input("Courtyard>")
+            encounter()
+            if userinput == "move north":
+                courtyard1cell = 7
+            elif userinput == "move west":
+                courtyard1cell = 1
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif courtyard1cell == 4:
+            print("Courtyard. Cell 4. North, East, South.")
+            monster = random.choice(["Shade", "Enthralled Monk"])
+            userinput = input("Courtyard>")
+            encounter()
+            if userinput == "move north":
+                courtyard1cell = 8
+            elif userinput == "move east":
+                courtyard1cell = 5
+            elif userinput == "move south":
+                courtyard1cell = 2
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif courtyard1cell == 5:
+            print("Courtyard. Cell 5. North, East, South, West.")
+            monster = random.choice(["Knight", "Shade"])
+            userinput = input("Courtyard>")
+            encounter()
+            if userinput == "move north":
+                courtyard1cell = 9
+            elif userinput == "move east":
+                courtyard1cell = 6
+            elif userinput == "move south":
+                courtyard1cell = 1
+            elif userinput == "move west":
+                courtyard1cell = 4
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif courtyard1cell == 6:
+            print("Courtyard. Cell 6. North, East, South, West.")
+            monster = random.choice(["Gargoyle", "Knight"])
+            userinput = input("Courtyard>")
+            encounter()
+            if userinput == "move north":
+                courtyard1cell = 10
+            elif userinput == "move east":
+                courtyard1cell = 7
+            elif userinput == "move south":
+                courtyard1cell = 1
+            elif userinput == "move west":
+                courtyard1cell = 5
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif courtyard1cell == 7:
+            print("Courtyard. Cell 7. North, South, West.")
+            monster = random.choice(["Shade", "Enthralled Monk"])
+            userinput = input("Courtyard>")
+            encounter()
+            if userinput == "move north":
+                courtyard1cell = 11
+            elif userinput == "move south":
+                courtyard1cell = 3
+            elif userinput == "move west":
+                courtyard1cell = 6
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif courtyard1cell == 8:
+            print("Courtyard. Cell 8. East, South.")
+            monster = random.choice(["Gargoyle", "Knight"])
+            userinput = input("Courtyard>")
+            encounter()
+            if userinput == "move east":
+                courtyard1cell = 9
+            elif userinput == "move south":
+                courtyard1cell = 4
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif courtyard1cell == 9:
+            print("Courtyard. Cell 9. East, South, North.")
+            monster = random.choice(["Shade", "Gargoyle"])
+            userinput = input("Courtyard>")
+            encounter()
+            if userinput == "move east":
+                courtyard1cell = 10
+            elif userinput == "move south":
+                courtyard1cell = 5
+            elif userinput == "move north":
+                courtyard1cell = 15
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif courtyard1cell == 10:
+            print("Courtyard. Cell 10. East, West, South, North.")
+            monster = random.choice(["Knight", "Shade"])
+            userinput = input("Courtyard>")
+            encounter()
+            if userinput == "move east":
+                courtyard1cell = 11
+            elif userinput == "move west":
+                courtyard1cell = 9
+            elif userinput == "move south":
+                courtyard1cell = 6
+            elif userinput == "move north":
+                courtyard1cell = 16
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif courtyard1cell == 11:
+            print("Courtyard. Cell 11. East, West, South, North.")
+            monster = random.choice(["Gargoyle", "Enthralled Monk"])
+            userinput = input("Courtyard>")
+            encounter()
+            if userinput == "move east":
+                courtyard1cell = 12
+            elif userinput == "move west":
+                courtyard1cell = 10
+            elif userinput == "move south":
+                courtyard1cell = 7
+            elif userinput == "move north":
+                courtyard1cell = 17
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif courtyard1cell == 12:
+            print("Courtyard. Cell 12. East, West, South.")
+            monster = random.choice(["Knight", "Shade"])
+            userinput = input("Courtyard>")
+            encounter()
+            if userinput == "move east":
+                courtyard1cell = 13
+            elif userinput == "move west":
+                courtyard1cell = 11
+            elif userinput == "move south":
+                courtyard1cell = 1
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif courtyard1cell == 13:
+            print("Courtyard. Cell 13. West, South.")
+            monster = random.choice(["Gargoyle", "Shade"])
+            userinput = input("Courtyard>")
+            encounter()
+            if userinput == "move west":
+                courtyard1cell = 12
+            elif userinput == "move south":
+                courtyard1cell = 3
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif courtyard1cell == 14:
+            print("Courtyard. Cell 14. East, South.")
+            monster = random.choice(["Enthralled Monk", "Gargoyle"])
+            userinput = input("Courtyard>")
+            encounter()
+            if userinput == "move east":
+                courtyard1cell = 15
+            elif userinput == "move south":
+                courtyard1cell = 9
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif courtyard1cell == 15:
+            print("Courtyard. Cell 15. East, South, North, West.")
+            monster = random.choice(["Knight", "Shade"])
+            userinput = input("Courtyard>")
+            encounter()
+            if userinput == "move east":
+                courtyard1cell = 10
+            elif userinput == "move south":
+                courtyard1cell = 9
+            elif userinput == "move north":
+                courtyard1cell = 18
+            elif userinput == "move west":
+                courtyard1cell = 14
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif courtyard1cell == 16:
+            print("Courtyard. Cell 16. East, West, South.")
+            monster = random.choice(["Gargoyle", "Knight"])
+            userinput = input("Courtyard>")
+            encounter()
+            if userinput == "move east":
+                courtyard1cell = 17
+            elif userinput == "move west":
+                courtyard1cell = 10
+            elif userinput == "move south":
+                courtyard1cell = 11
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif courtyard1cell == 17:
+            print("Courtyard. Cell 17. West, South.")
+            monster = random.choice(["Shade", "Enthralled Monk"])
+            userinput = input("Courtyard>")
+            encounter()
+            if userinput == "move west":
+                courtyard1cell = 16
+            elif userinput == "move south":
+                courtyard1cell = 11
+            elif userinput == "heal":
+                heal()
+            elif userinput == "help":
+                help()
+            elif userinput == "map":
+                map()
+            elif userinput == "wait":
+                print("You waited.")
+                encounter()
+            elif userinput == "stats":
+                stat()
+            elif userinput == "switch spell":
+                switch_spell()
+            else:
+                print("Invalid Command!")
+
+        elif courtyard1cell == 18:
+            print("Courtyard. Cell 18. South.")
+            monster = random.choice(["Knight", "Shade"])
+            userinput = input("Courtyard>")
+            encounter()
+            if userinput == "move south":
+                courtyard1cell = 15
             elif userinput == "heal":
                 heal()
             elif userinput == "help":
